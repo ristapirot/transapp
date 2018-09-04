@@ -349,16 +349,6 @@ export default {
       if (this.select && this.select2) {
         this.newFleets = this.fleets.filter(el => el.startCountry === this.select && el.endCountry === this.select2)
       }
-
-      // if (this.select !== null && this.select2 !== '') {
-      //   this.newFleets = this.fleets.filter(el => el.startCountry === this.select && el.endCountry === this.select2)
-      // } else if (this.select !== '' && (this.select2 == null || this.select2 == undefined)) {
-      //   this.newFleets = this.fleets.filter(el => el.startCountry === this.select)
-      // } else if ((this.select === null || this.select === undefined) && this.select2 !== '') {
-      //   this.newFleets = this.fleets.filter(el => el.endCountry === this.select2)
-      // } else {
-      //   this.newFleets = this.fleets
-      // }
     }
   }
 }
