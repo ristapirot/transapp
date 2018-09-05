@@ -7,7 +7,7 @@
         >
         <v-list dense>
             <router-link to="/dashboard/find-fleet" tag='a'>
-                <v-list-tile>
+                <v-list-tile @click="noAction">
                 <v-list-tile-action>
                     <v-icon>near_me</v-icon>
                 </v-list-tile-action>
@@ -40,12 +40,19 @@
                 <v-list-tile-title>Settings</v-list-tile-title>
             </v-list-tile-content>
             </v-list-tile>
+            <v-list-tile @click="userLogout">
+            <v-list-tile-action>
+                <v-icon>exit_to_app</v-icon>
+            </v-list-tile-action>
+            <v-list-tile-content>
+                <v-list-tile-title>Logout</v-list-tile-title>
+            </v-list-tile-content>
+            </v-list-tile>
         </v-list>
         </v-navigation-drawer>
         <v-toolbar color="blue lighten-2" dark fixed app>
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title>Dashboard {{ getLoggedUser.isLogged }}</v-toolbar-title>
-        <v-toolbar-title @click="userLogout">Logout</v-toolbar-title>
+        <v-toolbar-title>Dashboard</v-toolbar-title>
         </v-toolbar>
         <v-content>
         <v-container fluid fill-height>
@@ -87,6 +94,9 @@ import { mapGetters, mapActions } from 'vuex';
             this.logout().then(() => {
                 this.$router.push('/')
             })
+        },
+        noAction () {
+
         }
     }
   }

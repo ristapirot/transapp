@@ -97,11 +97,7 @@
                 >
                   <div slot="header" class="title"><span class="blue--text headline lighten-1 text-capitalize font-weight-medium">{{ fleet.startCountry }}</span>, {{ fleet.startCity }} - <span class="blue--text font-weight-medium headline text-capitalize lighten-1">{{ fleet.endCountry }}</span>, {{ fleet.endCity }}</div>
                   <v-card justify-center>
-                    <v-card-text class="title"><v-icon>euro_symbol</v-icon> {{ fleet.price }}</v-card-text>
-                    <v-card-text class="title"><v-icon>calendar_today</v-icon> {{ fleet.startDate }}</v-card-text>
-                    <v-card-text class="title"><v-icon>person</v-icon> {{ fleet.person }}</v-card-text>
-                    <v-card-text class="title"><v-icon>phone</v-icon> {{ fleet.phone }}</v-card-text>
-                    <v-card-text class="title"><v-icon>view_agenda</v-icon> {{ fleet.weight }} tons</v-card-text>
+                    <v-card-text class="title"><v-icon>error</v-icon> Login to see details</v-card-text>
                   </v-card>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -286,44 +282,13 @@ export default {
       search: null,
       search2: null,
       select: null,
-      select2: null,
-      states: [
-        'Austria',
-        'Belgium',
-        'Bulgaria',
-        'Bosnia',
-        'Croatia',
-        'Cyprus',
-        'Czech Republic',
-        'Denmark',
-        'Estonia',
-        'Finland',
-        'France',
-        'Germany',
-        'Greece',
-        'Hungary',
-        'Ireland',
-        'Italy',
-        'Latvia',
-        'Lithuania',
-        'Luxembourg',
-        'Malta',
-        'Netherlands',
-        'Poland',
-        'Portugal',
-        'Romania',
-        'Serbia',
-        'Slovakia',
-        'Slovenia',
-        'Spain',
-        'Sweden',
-        'United Kingdom'
-      ]
+      select2: null
     }
   },
   computed: {
     ...mapGetters([
-      'getLoggedUser'
+      'getLoggedUser',
+      'getCountries'
     ])
   },
   watch: {
@@ -346,14 +311,14 @@ export default {
       this.login({
         name: this.loginUser,
         password: this.loginPassword
-      }).then(() => this.$router.push('/dashboard'))
+      }).then(() => this.$router.push('/dashboard/find-fleet'))
     },
 
     querySelections (v) {
       this.loading = true
       // Simulated ajax query
       setTimeout(() => {
-        this.items = this.states.filter(e => {
+        this.items = this.getCountries.filter(e => {
           return (e || '').toLowerCase().indexOf((v || '').toLowerCase()) > -1
         })
         this.loading = false
