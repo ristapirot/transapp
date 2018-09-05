@@ -44,7 +44,8 @@
         </v-navigation-drawer>
         <v-toolbar color="blue lighten-2" dark fixed app>
         <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-        <v-toolbar-title>Dashboard</v-toolbar-title>
+        <v-toolbar-title>Dashboard {{ getLoggedUser.isLogged }}</v-toolbar-title>
+        <v-toolbar-title @click="userLogout">Logout</v-toolbar-title>
         </v-toolbar>
         <v-content>
         <v-container fluid fill-height>
@@ -60,12 +61,33 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex';
   export default {
     data: () => ({
       drawer: null
     }),
     props: {
       source: String
+    },
+    beforeMount () {
+        if (!this.getLoggedUser.isLogged) {
+            this.$router.push('/')
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'getLoggedUser'
+        ])
+    },
+    methods: {
+        ...mapActions([
+            'logout'
+        ]),
+        userLogout () {
+            this.logout().then(() => {
+                this.$router.push('/')
+            })
+        }
     }
   }
 </script>
