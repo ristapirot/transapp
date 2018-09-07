@@ -16,14 +16,16 @@
                 </v-list-tile-content>
                 </v-list-tile>
             </router-link>
-            <v-list-tile>
-            <v-list-tile-action>
-                <v-icon>add_circle</v-icon>
-            </v-list-tile-action>
-            <v-list-tile-content>
-                <v-list-tile-title>Add new fleet</v-list-tile-title>
-            </v-list-tile-content>
-            </v-list-tile>
+            <router-link to="/dashboard/add-fleet" tag='a'>
+                <v-list-tile @click="noAction">
+                <v-list-tile-action>
+                    <v-icon>add_circle</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>Add new fleet</v-list-tile-title>
+                </v-list-tile-content>
+                </v-list-tile>
+            </router-link>
             <v-list-tile>
             <v-list-tile-action>
                 <v-icon>work</v-icon>

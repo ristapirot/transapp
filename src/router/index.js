@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Dashboard from '@/components/Dashboard'
 import FindFleets from '@/components/FindFleets'
+import AddNewFleet from '@/components/AddNewFleet'
 
 Vue.use(Router)
 
@@ -23,7 +24,12 @@ export default new Router({
             path: 'find-fleet',
             name: 'FindFleets',
             component: FindFleets
-        }
+        },
+        {
+          path: 'add-fleet',
+          name: 'AddNewFleet',
+          component: AddNewFleet
+      }
       ]
     }
   ]

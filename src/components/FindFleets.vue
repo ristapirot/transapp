@@ -80,11 +80,11 @@
                   v-for="(fleet,i) in newFleets"
                   :key="i"
                 >
-                  <div slot="header" class="title"><span class="blue--text headline lighten-1 text-capitalize font-weight-medium">{{ fleet.startCountry }}</span>, {{ fleet.startCity }} - <span class="blue--text font-weight-medium headline text-capitalize lighten-1">{{ fleet.endCountry }}</span>, {{ fleet.endCity }}</div>
+                  <div slot="header" class="title"><span class="blue--text headline lighten-1 text-capitalize font-weight-medium">{{ fleet.loadingCountry }}</span>, {{ fleet.loadingCity }} - <span class="blue--text font-weight-medium headline text-capitalize lighten-1">{{ fleet.unloadingCountry }}</span>, {{ fleet.unloadingCity }}</div>
                   <v-card justify-center>
                     <v-card-text class="title"><v-icon>euro_symbol</v-icon> {{ fleet.price }}</v-card-text>
-                    <v-card-text class="title"><v-icon>calendar_today</v-icon> {{ fleet.startDate }}</v-card-text>
-                    <v-card-text class="title"><v-icon>person</v-icon> {{ fleet.person }}</v-card-text>
+                    <v-card-text class="title"><v-icon>calendar_today</v-icon> {{ fleet.loadingDate }}</v-card-text>
+                    <v-card-text class="title"><v-icon>person</v-icon> {{ fleet.createdBy.name }}</v-card-text>
                     <v-card-text class="title"><v-icon>phone</v-icon> {{ fleet.phone }}</v-card-text>
                     <v-card-text class="title"><v-icon>view_agenda</v-icon> {{ fleet.weight }} tons</v-card-text>
                   </v-card>
@@ -100,7 +100,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
     data () {
       return {
@@ -111,63 +111,7 @@ export default {
         items: [],
         items2: [],
         newFleets: [],
-        fleets: [
-          {
-            startCountry: 'Serbia',
-            startCity: 'Belgrade',
-            endCountry: 'Bulgaria',
-            endCity: 'Sofia',
-            price: 500,
-            startDate: '05.09.2018.',
-            person: 'Milos Simonovic',
-            phone: '+38162656667',
-            weight: 24
-          },
-          {
-            startCountry: 'Bulgaria',
-            startCity: 'Blagoevgrad',
-            endCountry: 'Serbia',
-            endCity: 'Celarevo',
-            price: 700,
-            startDate: '06.09.2018.',
-            person: 'Igor Jonic',
-            phone: '+38162450022',
-            weight: 22
-          },
-          {
-            startCountry: 'Germany',
-            startCity: 'Berlin',
-            endCountry: 'Bulgaria',
-            endCity: 'Sofia',
-            price: 2100,
-            startDate: '12.09.2018.',
-            person: 'John Carter',
-            phone: '+3875561516',
-            weight: 20
-          },
-          {
-            startCountry: 'Serbia',
-            startCity: 'Belgrade',
-            endCountry: 'Bosnia',
-            endCity: 'Sarajevo',
-            price: 500,
-            startDate: '05.09.2018.',
-            person: 'Milos Simonovic',
-            phone: '+38162656667',
-            weight: 24
-          },
-          {
-            startCountry: 'Bulgaria',
-            startCity: 'Ruse',
-            endCountry: 'Serbia',
-            endCity: 'Novi Sad',
-            price: 1000,
-            startDate: '05.09.2018.',
-            person: 'Milos Simonovic',
-            phone: '+38162656667',
-            weight: 24
-          }
-        ],
+        fleets: [],
         search: null,
         search2: null,
         select: null,
@@ -182,12 +126,20 @@ export default {
         val && val !== this.select2 && this.querySelections(val)
       }
     },
+    created () {
+      this.getFleetsToStore()
+    },
     computed: {
       ...mapGetters([
-        'getCountries'
+        'getCountries',
+        'getFleets'
       ])
     },
     methods: {
+      ...mapActions([
+        'getFleetsToStore'
+      ]),
+
       querySelections (v) {
         this.loading = true
         // Simulated ajax query
@@ -200,15 +152,15 @@ export default {
       },
       searchPlace () {
         if (this.select) {
-          this.newFleets = this.fleets.filter(el => el.startCountry === this.select)
+          this.newFleets = this.getFleets.filter(el => el.loadingCountry === this.select)
         }
 
         if (this.select2) {
-          this.newFleets = this.fleets.filter(el => el.endCountry === this.select2)
+          this.newFleets = this.getFleets.filter(el => el.unloadingCountry === this.select2)
         }
 
         if (this.select && this.select2) {
-          this.newFleets = this.fleets.filter(el => el.startCountry === this.select && el.endCountry === this.select2)
+          this.newFleets = this.getFleets.filter(el => el.loadingCountry === this.select && el.unloadingCountry === this.select2)
         }
       }
     }
