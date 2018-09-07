@@ -83,7 +83,7 @@
                   <div slot="header" class="title"><span class="blue--text headline lighten-1 text-capitalize font-weight-medium">{{ fleet.loadingCountry }}</span>, {{ fleet.loadingCity }} - <span class="blue--text font-weight-medium headline text-capitalize lighten-1">{{ fleet.unloadingCountry }}</span>, {{ fleet.unloadingCity }}</div>
                   <v-card justify-center>
                     <v-card-text class="title"><v-icon>euro_symbol</v-icon> {{ fleet.price }}</v-card-text>
-                    <v-card-text class="title"><v-icon>calendar_today</v-icon> {{ fleet.loadingDate }}</v-card-text>
+                    <v-card-text class="title"><v-icon>calendar_today</v-icon> {{ fleet.loadingDate.slice(0,10) }}</v-card-text>
                     <v-card-text class="title"><v-icon>person</v-icon> {{ fleet.createdBy.name }}</v-card-text>
                     <v-card-text class="title"><v-icon>phone</v-icon> {{ fleet.phone }}</v-card-text>
                     <v-card-text class="title"><v-icon>view_agenda</v-icon> {{ fleet.weight }} tons</v-card-text>
