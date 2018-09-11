@@ -95,7 +95,7 @@
                   v-for="(fleet,i) in newFleets"
                   :key="i"
                 >
-                  <div slot="header" class="title"><span class="blue--text headline lighten-1 text-capitalize font-weight-medium">{{ fleet.startCountry }}</span>, {{ fleet.startCity }} - <span class="blue--text font-weight-medium headline text-capitalize lighten-1">{{ fleet.endCountry }}</span>, {{ fleet.endCity }}</div>
+                  <div slot="header" class="title"><span class="blue--text headline lighten-1 text-capitalize font-weight-medium">{{ fleet.loadingCountry }}</span>, {{ fleet.loadingCity }} - <span class="blue--text font-weight-medium headline text-capitalize lighten-1">{{ fleet.unloadingCountry }}</span>, {{ fleet.unloadingCity }}</div>
                   <v-card justify-center>
                     <v-card-text class="title"><v-icon>error</v-icon> Login to see details</v-card-text>
                   </v-card>
@@ -153,14 +153,14 @@
                     </v-toolbar>
                     <v-card-text>
                       <v-form>
-                        <v-text-field prepend-icon="person" name="user" label="Login" type="text"></v-text-field>
-                        <v-text-field prepend-icon="email" name="email" label="Email" type="email"></v-text-field>
-                        <v-text-field id="passwordRegister" prepend-icon="lock" name="passwordRegister" label="Password" type="password"></v-text-field>
+                        <v-text-field prepend-icon="person" name="user" label="Login" type="text" v-model="registerUser"></v-text-field>
+                        <v-text-field prepend-icon="email" name="email" label="Email" type="email" v-model="registerEmail"></v-text-field>
+                        <v-text-field id="passwordRegister" prepend-icon="lock" name="passwordRegister" label="Password" type="password" v-model="registerPassword"></v-text-field>
                       </v-form>
                     </v-card-text>
                     <v-card-actions>
                       <v-spacer></v-spacer>
-                      <v-btn color="primary">Register</v-btn>
+                      <v-btn color="primary" @click="userRegister">Register</v-btn>
                     </v-card-actions>
                   </v-card>
                 </v-flex>
@@ -222,73 +222,21 @@ export default {
       items: [],
       items2: [],
       newFleets: [],
-      fleets: [
-        {
-          startCountry: 'Serbia',
-          startCity: 'Belgrade',
-          endCountry: 'Bulgaria',
-          endCity: 'Sofia',
-          price: 500,
-          startDate: '05.09.2018.',
-          person: 'Milos Simonovic',
-          phone: '+38162656667',
-          weight: 24
-        },
-        {
-          startCountry: 'Bulgaria',
-          startCity: 'Blagoevgrad',
-          endCountry: 'Serbia',
-          endCity: 'Celarevo',
-          price: 700,
-          startDate: '06.09.2018.',
-          person: 'Igor Jonic',
-          phone: '+38162450022',
-          weight: 22
-        },
-        {
-          startCountry: 'Germany',
-          startCity: 'Berlin',
-          endCountry: 'Bulgaria',
-          endCity: 'Sofia',
-          price: 2100,
-          startDate: '12.09.2018.',
-          person: 'John Carter',
-          phone: '+3875561516',
-          weight: 20
-        },
-        {
-          startCountry: 'Serbia',
-          startCity: 'Belgrade',
-          endCountry: 'Bosnia',
-          endCity: 'Sarajevo',
-          price: 500,
-          startDate: '05.09.2018.',
-          person: 'Milos Simonovic',
-          phone: '+38162656667',
-          weight: 24
-        },
-        {
-          startCountry: 'Bulgaria',
-          startCity: 'Ruse',
-          endCountry: 'Serbia',
-          endCity: 'Novi Sad',
-          price: 1000,
-          startDate: '05.09.2018.',
-          person: 'Milos Simonovic',
-          phone: '+38162656667',
-          weight: 24
-        }
-      ],
+      fleets: [],
       search: null,
       search2: null,
       select: null,
-      select2: null
+      select2: null,
+      registerUser: '',
+      registerEmail: '',
+      registerPassword: ''
     }
   },
   computed: {
     ...mapGetters([
       'getLoggedUser',
-      'getCountries'
+      'getCountries',
+      'getFleets'
     ])
   },
   watch: {
@@ -299,9 +247,14 @@ export default {
       val && val !== this.select2 && this.querySelections(val)
     }
   },
+  created () {
+    this.getFleetsToStore()
+  },
   methods: {
     ...mapActions([
-      'login'
+      'login',
+      'register',
+      'getFleetsToStore'
     ]),
 
     userLogin () {
@@ -312,6 +265,20 @@ export default {
         name: this.loginUser,
         password: this.loginPassword
       }).then(() => this.$router.push('/dashboard/find-fleet'))
+    },
+
+    userRegister () {
+      var newUser = {
+        name: this.registerUser,
+        password: this.registerPassword,
+        email: this.registerEmail,
+        phone: '',
+        skypeName: '',
+        fullName: '',
+        company: ''
+      }
+
+      this.register(newUser)
     },
 
     querySelections (v) {
@@ -326,15 +293,15 @@ export default {
     },
     searchPlace () {
       if (this.select) {
-        this.newFleets = this.fleets.filter(el => el.startCountry === this.select)
+        this.newFleets = this.getFleets.filter(el => el.loadingCountry === this.select)
       }
 
       if (this.select2) {
-        this.newFleets = this.fleets.filter(el => el.endCountry === this.select2)
+        this.newFleets = this.getFleets.filter(el => el.unloadingCountry === this.select2)
       }
 
       if (this.select && this.select2) {
-        this.newFleets = this.fleets.filter(el => el.startCountry === this.select && el.endCountry === this.select2)
+        this.newFleets = this.getFleets.filter(el => el.loadingCountry === this.select && el.unloadingCountry === this.select2)
       }
     }
   }

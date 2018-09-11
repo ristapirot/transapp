@@ -46,6 +46,11 @@ const state = {
         localStorage.removeItem("token");
         localStorage.removeItem('user');
         commit('logout');
+    },
+    register({commit}, creds) {
+        return api.register(creds).then(result => {
+            console.log(result)
+        })
     }
   }
   

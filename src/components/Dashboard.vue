@@ -26,7 +26,18 @@
                 </v-list-tile-content>
                 </v-list-tile>
             </router-link>
-            <v-list-tile>
+            <router-link to="/dashboard/my-fleets" tag='a'>
+                <v-list-tile @click="noAction">
+                <v-list-tile-action>
+                    <v-icon>ballot</v-icon>
+                </v-list-tile-action>
+                <v-list-tile-content>
+                    <v-list-tile-title>My fleets</v-list-tile-title>
+                </v-list-tile-content>
+                </v-list-tile>
+            </router-link>
+            <router-link to="/dashboard/my-company" tag='a'>
+            <v-list-tile @click="noAction">
             <v-list-tile-action>
                 <v-icon>work</v-icon>
             </v-list-tile-action>
@@ -34,6 +45,7 @@
                 <v-list-tile-title>My company</v-list-tile-title>
             </v-list-tile-content>
             </v-list-tile>
+            </router-link>
             <v-list-tile>
             <v-list-tile-action>
                 <v-icon>build</v-icon>
