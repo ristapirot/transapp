@@ -1,15 +1,14 @@
 <template>
   <v-content>
     <section>
-      <v-parallax src="https://images.pexels.com/photos/37728/pexels-photo-37728.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" height="700">
+      <v-parallax height="700">
           <v-layout
             column
             align-center
             justify-center
             class="white--text"
           >
-            <img src="../assets/logo.png" class="logo" alt="Pirokom" height="200">
-            <h1 class="white--text mb-2 display-2 text-xs-center">Trans<span class="blue--text lighten-1">App</span>.com</h1>
+            <h1 class="black--text mb-2 display-2 font-weight-black text-xs-center"><v-icon x-large class="blue--text lighten-2">local_shipping</v-icon>TRANS<span class="blue--text lighten-2">APP</span>.com</h1>
             <!-- <div class="subheading mb-3 text-xs-center">Find fleet, fast</div> -->
             <v-btn
               class="blue lighten-2 mt-5"
