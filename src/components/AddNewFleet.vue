@@ -128,7 +128,7 @@
                             class="my-2 py-3">
                             <v-text-field
                                 label="Contact person"
-                                :value="contactPerson.name"
+                                :value="contactPerson.fullName"
                                 class="mx-2"
                                 color="white"
                                 prepend-icon="person"
@@ -142,7 +142,7 @@
                             class="my-2 py-3">
                             <v-text-field
                                 label="Contact phone"
-                                :value="phone"
+                                :value="contactPerson.phone"
                                 class="mx-2"
                                 color="white"
                                 prepend-icon="phone"

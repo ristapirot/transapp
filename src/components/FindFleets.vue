@@ -80,12 +80,53 @@
                   v-for="(fleet,i) in newFleets"
                   :key="i"
                 >
-                  <div slot="header" class="title"><span class="blue--text headline lighten-1 text-capitalize font-weight-medium">{{ fleet.loadingCountry }}</span>, {{ fleet.loadingCity }} - <span class="blue--text font-weight-medium headline text-capitalize lighten-1">{{ fleet.unloadingCountry }}</span>, {{ fleet.unloadingCity }}</div>
+                  <div slot="header" class="title" @click="selectFleet(fleet)"><span class="blue--text headline lighten-1 text-capitalize font-weight-medium">{{ fleet.loadingCountry }}</span>, {{ fleet.loadingCity }} - <span class="blue--text font-weight-medium headline text-capitalize lighten-1">{{ fleet.unloadingCountry }}</span>, {{ fleet.unloadingCity }}</div>
                   <v-card justify-center>
                     <v-card-text class="title"><v-icon>euro_symbol</v-icon> {{ fleet.price }}</v-card-text>
-                    <v-card-text class="title"><v-icon>calendar_today</v-icon> {{ fleet.loadingDate.slice(0,10) }}</v-card-text>
-                    <v-card-text class="title"><v-icon>person</v-icon> {{ fleet.createdBy.name }}</v-card-text>
-                    <v-card-text class="title"><v-icon>phone</v-icon> {{ fleet.phone }}</v-card-text>
+                    
+                    <v-card-text class="title" @click="showFleet(fleet)"><v-icon>calendar_today</v-icon> {{ fleet.loadingDate.slice(0,10) }}</v-card-text>
+                    
+                    <v-dialog
+                      v-model="dialog"
+                      width="500"
+                    >
+
+                      <v-card-text 
+                        class="title"
+                        slot="activator"  
+                      ><v-icon>person</v-icon> {{ fleet.createdBy.name }} <br> <span class="blue--text lighten-2 caption">Click to see details</span></v-card-text>
+
+                      <v-card>
+                        <v-card-title
+                          class="headline grey lighten-2"
+                          primary-title
+                        >
+                          <v-icon class="">person</v-icon>  {{selectedFleet.createdBy.name}}
+                        </v-card-title>
+                        
+                        <v-card-text>
+                          <span class="font-weight-bold blue--text lighten-2">Name: </span>{{selectedFleet.createdBy.fullName}}
+                        </v-card-text>
+
+                        <v-card-text>
+                          <v-icon class="blue--text lighten-2">business</v-icon> {{selectedFleet.createdBy.company}}
+                        </v-card-text>
+
+                        <v-card-text>
+                          <v-icon class="blue--text lighten-2">email</v-icon> {{selectedFleet.createdBy.email}}
+                        </v-card-text>
+
+                        <v-card-text>
+                          <v-icon class="blue--text lighten-2">phone</v-icon> {{selectedFleet.createdBy.phone}}
+                        </v-card-text>
+
+                        <v-card-text>
+                          <span class="font-weight-bold blue--text lighten-2">Skype:</span> {{selectedFleet.createdBy.skypeName}}
+                        </v-card-text>
+                        
+                      </v-card>
+                    </v-dialog>
+                    
                     <v-card-text class="title"><v-icon>view_agenda</v-icon> {{ fleet.weight }} tons</v-card-text>
                   </v-card>
                 </v-expansion-panel-content>
@@ -111,11 +152,21 @@ export default {
         items: [],
         items2: [],
         newFleets: [],
-        fleets: [],
+        selectedFleet: {
+          createdBy: {
+            name: '',
+            fullName: '',
+            company: '',
+            skypeName: '',
+            email: '',
+            phone: ''
+          }
+        },
         search: null,
         search2: null,
         select: null,
-        select2: null
+        select2: null,
+        dialog: false
       }
     },
     watch: {
@@ -139,6 +190,11 @@ export default {
       ...mapActions([
         'getFleetsToStore'
       ]),
+
+      selectFleet(fleet) {
+        this.selectedFleet = fleet
+        console.log(this.selectedFleet)
+      },
 
       querySelections (v) {
         this.loading = true

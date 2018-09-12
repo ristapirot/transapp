@@ -39,10 +39,10 @@
             <router-link to="/dashboard/my-company" tag='a'>
             <v-list-tile @click="noAction">
             <v-list-tile-action>
-                <v-icon>work</v-icon>
+                <v-icon>face</v-icon>
             </v-list-tile-action>
             <v-list-tile-content>
-                <v-list-tile-title>My company</v-list-tile-title>
+                <v-list-tile-title>My profile</v-list-tile-title>
             </v-list-tile-content>
             </v-list-tile>
             </router-link>

@@ -76,14 +76,15 @@ export default {
 
         save () {
             var newUser = {
-                fullName: this.fullName,
-                company: this.company,
-                phone: this.phone,
-                skypeName: this.skypeName,
-                email: this.email
+                fullName: this.fullName !== '' ? this.fullName : this.user.fullName,
+                company: this.company !== '' ? this.company : this.user.company,
+                phone: this.phone !== '' ? this.phone : this.user.phone,
+                skypeName: this.skypeName !== '' ? this.skypeName : this.user.skypeName,
+                email: this.email !== '' ? this.email : this.user.email
             }
             // TO DO: Updating profile, currently not working..
-            //this.updateProfile(newUser)
+            this.updateProfile(newUser)
+            this.user = newUser
         }
     }
 }
